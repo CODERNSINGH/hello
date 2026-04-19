@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────────────────────────────────────
-// client/app.js - Temporary Static Demo Mode (Direct Groq Calls)
+// client/app.js - Runtime-configured AI client
 // ──────────────────────────────────────────────────────────────────────────────
 
 // [CONFIG] Read credentials from environment / runtime configuration
@@ -73,7 +73,7 @@ marked.setOptions({
 function checkHealth() {
     // Mock health directly for demo
     statusIndicator.className = "status-indicator online";
-    statusText.textContent = "Demo Mode (Direct API)";
+    statusText.textContent = "Demo Mode";
 }
 
 function fetchStats() {
@@ -168,7 +168,7 @@ function toggleSidebar(show) {
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Messaging (Direct Groq API)
+// Messaging
 // ──────────────────────────────────────────────────────────────────────────────
 
 function autoScroll() {
@@ -233,11 +233,11 @@ async function handleSend() {
 Act precisely as if you have scanned all NCERT textbooks and Past Year Questions for the subject: ${currentSubject}.
 
 When answering, ALWAYS follow this strict structure to impress the client:
-1. 📌 **Quick Concept** – 1-line core idea
-2. 📝 **Detailed Explanation** – Highly structured, bulleted answer exactly as expected by a CBSE Examiner
-3. ✅ **Topper's Tip** – Provide a real strategy for presenting this answer
-4. 🔢 **Calculations/Equations** – If mathematics or science is involved, clearly state the steps
-5. 📊 **Marks Breakdown** – Conclude by showing how marks (out of 3 or 5) would be awarded by an examiner.
+1.  **Quick Concept** – 1-line core idea
+2.  **Detailed Explanation** – Highly structured, bulleted answer exactly as expected by a CBSE Examiner
+3.  **Topper's Tip** – Provide a real strategy for presenting this answer
+4.  **Calculations/Equations** – If mathematics or science is involved, clearly state the steps
+5.  **Marks Breakdown** – Conclude by showing how marks (out of 3 or 5) would be awarded by an examiner.
 
 FORMATTING: Use bold, italics, and markdown clearly.
 Question to resolve: ${text}`;
