@@ -2,10 +2,8 @@
 // client/app.js - Runtime-configured AI client
 // ──────────────────────────────────────────────────────────────────────────────
 
-// [CONFIG] Read credentials from environment / runtime configuration
-const APP_CONFIG = window.APP_CONFIG || {};
-const GROQ_API_KEY = APP_CONFIG.GROQ_API_KEY || window.GROQ_API_KEY || null;
-const GROQ_API_URL = APP_CONFIG.GROQ_API_URL || window.GROQ_API_URL || "https://api.groq.com/openai/v1/chat/completions";
+// Backend API route
+const CHAT_API_ROUTE = '/api/chat';
 
 // State
 let currentSubject = "All Subjects";
@@ -67,13 +65,13 @@ marked.setOptions({
 });
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Boot / Mocks (Since Backend is bypassed for the demo)
+// Boot / State initialization
 // ──────────────────────────────────────────────────────────────────────────────
 
 function checkHealth() {
-    // Mock health directly for demo
+    // Set initial connection status
     statusIndicator.className = "status-indicator online";
-    statusText.textContent = "Demo Mode";
+    statusText.textContent = "Ready";
 }
 
 function fetchStats() {
@@ -244,14 +242,10 @@ Question to resolve: ${text}`;
 
     const t0 = performance.now();
     try {
-        if (!GROQ_API_KEY) {
-            throw new Error("Missing API key. Please provide GROQ_API_KEY via environment or window.APP_CONFIG.");
-        }
-        const response = await fetch(GROQ_API_URL, {
+        const response = await fetch(CHAT_API_ROUTE, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${GROQ_API_KEY}`
             },
             body: JSON.stringify({
                 model: "llama-3.3-70b-versatile",
@@ -278,7 +272,7 @@ Question to resolve: ${text}`;
     } catch (e) {
         aiWrapper.querySelector('.message-content').innerHTML = `
             <div style="color: #ff453a;">
-                <b>Demo Mode Error:</b> Could not reach AI Model.<br/>${e.message}
+                <b>Request Error:</b> Could not reach AI model.<br/>${e.message}
             </div>
         `;
         autoScroll();
