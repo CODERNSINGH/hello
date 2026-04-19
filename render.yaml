@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: cbse-smart-tutor
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: python run_frontend.py
+    envVars:
+      - key: GROQ_API_KEY
+        fromSecret: GROQ_API_KEY
+      - key: GROQ_API_URL
+        value: https://api.groq.com/openai/v1/chat/completions

@@ -258,7 +258,17 @@ Question to resolve: ${text}`;
             })
         });
 
-        if(!response.ok) throw new Error("Groq API Error: " + response.statusText);
+        if(!response.ok) {
+            const errorText = await response.text();
+            let detail = response.statusText;
+            try {
+                const jsonBody = JSON.parse(errorText);
+                if (jsonBody.error) detail = jsonBody.error;
+            } catch {
+                detail = errorText || detail;
+            }
+            throw new Error(`Server Error: ${response.status} ${detail}`);
+        }
 
         const result = await response.json();
         const t1 = performance.now();

@@ -16,6 +16,8 @@ PORT = int(os.getenv('PORT', '3000'))
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 GROQ_API_URL = os.getenv('GROQ_API_URL', 'https://api.groq.com/openai/v1/chat/completions')
 
+GROQ_API_KEY_PRESENT = bool(os.getenv('GROQ_API_KEY'))
+
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -86,6 +88,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 def start_server():
+    print(f'GROQ_API_URL={GROQ_API_URL}')
+    print(f'GROQ_API_KEY present: {GROQ_API_KEY_PRESENT}')
     with socketserver.ThreadingTCPServer(('', PORT), Handler) as httpd:
         print('\n' + '='*50)
         print('🚀 Frontend Server Started Successfully!')
